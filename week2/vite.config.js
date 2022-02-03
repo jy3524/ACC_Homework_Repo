@@ -2,5 +2,5 @@ export default {
   chokidarWarchOptions: {
     usePolling: true
   },
-  base: "./",
+  base: "/ACC_Homework_Repo/week2/",
 }
