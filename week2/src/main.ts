@@ -1,3 +1,4 @@
+// Assignment 2 - Jeongin Yoon
 import * as PIXI from "pixi.js";
 
 const main = async () => {
