@@ -483,7 +483,6 @@ const main = async () => {
     })
     tween.then(() => {console.log("animating")})
   }
-
   for (let i = 0; i < window.innerHeight; i++) {
     let sprite = new PIXI.Sprite(texture);
     sprite.scale.set(0.1, 0.1)
