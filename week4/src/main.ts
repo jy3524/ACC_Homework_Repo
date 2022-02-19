@@ -25,17 +25,18 @@ const main = async () => {
 
   let texture = app.loader.resources['circle'].texture;
 
+  //Wave Part
   for (let i = 0; i < window.innerHeight; i++) {
     let sprite = new PIXI.Sprite(texture);
     sprite.scale.set(0.1, 0.1)
-    sprite.x = 0;
+    sprite.x = 0; // this value increases + 50 every iteration
     sprite.y = i;
 
     app.stage.addChild(sprite);
 
     let tween = gsap.to(sprite, {
       y: window.innerHeight,
-      duration: 1,
+      duration: 1, // this value decreases -0.001 every iteration
       repeat: -1,
       yoyo: true,
     })
@@ -1080,6 +1081,7 @@ const main = async () => {
     tween.then(() => {console.log("animating")})
   }*/
 
+  // Circle Part
   for (let j = 0; j < 1000; j++) {
     const graphics = new PIXI.Graphics();
     graphics.x = window.innerWidth / 2;
