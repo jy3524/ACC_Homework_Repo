@@ -9,7 +9,7 @@ import * as dat from 'dat.gui';
 // loading objects/assets
 const load = (app: PIXI.Application) => {
   return new Promise<void>((resolve) => {
-    app.loader.add('character', 'asset/idle_1.png').load(() => {
+    app.loader.add('character', 'assets/idle_1.png').load(() => {
       resolve();
     });
   });
@@ -17,7 +17,7 @@ const load = (app: PIXI.Application) => {
 
 const load1 = (app: PIXI.Application) => {
   return new Promise<void>((resolve) => {
-    app.loader.add('circle', 'asset/circle.png').load(() => {
+    app.loader.add('circle', 'assets/circle.png').load(() => {
       resolve();
     });
   });
@@ -25,7 +25,7 @@ const load1 = (app: PIXI.Application) => {
 
 const load2 = (app: PIXI.Application) => {
   return new Promise<void>((resolve) => {
-    app.loader.add('square', 'asset/square.png').load(() => {
+    app.loader.add('square', 'assets/square.png').load(() => {
       resolve();
     });
   });
@@ -33,7 +33,7 @@ const load2 = (app: PIXI.Application) => {
 
 const load3 = (app: PIXI.Application) => {
   return new Promise<void>((resolve) => {
-    app.loader.add('triangle', 'asset/triangle.png').load(() => {
+    app.loader.add('triangle', 'assets/triangle.png').load(() => {
       resolve();
     });
   });
@@ -41,7 +41,7 @@ const load3 = (app: PIXI.Application) => {
 
 const load4 = (app: PIXI.Application) => {
   return new Promise<void>((resolve) => {
-    app.loader.add('pentagon', 'asset/pentagon.png').load(() => {
+    app.loader.add('pentagon', 'assets/pentagon.png').load(() => {
       resolve();
     });
   });
@@ -49,7 +49,7 @@ const load4 = (app: PIXI.Application) => {
 
 const load5 = (app: PIXI.Application) => {
   return new Promise<void>((resolve) => {
-    app.loader.add('hexagon', 'asset/hexagon.png').load(() => {
+    app.loader.add('hexagon', 'assets/hexagon.png').load(() => {
       resolve();
     });
   });
@@ -57,7 +57,7 @@ const load5 = (app: PIXI.Application) => {
 
 const load6 = (app: PIXI.Application) => {
   return new Promise<void>((resolve) => {
-    app.loader.add('art', 'asset/art.png').load(() => {
+    app.loader.add('art', 'assets/art.png').load(() => {
       resolve();
     });
   });
