@@ -4,7 +4,7 @@
 
 ##### The imported scope 3D model is what I built for the 3D modeling class using Maya. Maya's Mac version does not provide/support exporting gltf. So, I exported obj file from Maya and imported obj file to Cinema 4D and then exported to gltf file from Cinema 4D.
 
-##### For this assignment, I created a space scene with stars (particles) and a scope 3D model (gltf) with color material on the turntable (plane).
+##### For this assignment, I created a space scene with stars (particles) and a scope 3D model (gltf) with color material on the turntable (plane). A scope is rotating on Y-Axis.
 
 ##### particles code from DesignCourse YouTube
 ```js
