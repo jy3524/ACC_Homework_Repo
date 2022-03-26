@@ -72,7 +72,7 @@ function initScene() {
   lightPoint.shadow.camera.far = cameraFar;
 
   // import scope 3D model asset
-  const loader = new GLTFLoader().setPath('/assets/');
+  const loader = new GLTFLoader().setPath('./assets/');
   loader.load('scope.gltf', (gltf) => {
     model = gltf.scene;
 
