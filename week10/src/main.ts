@@ -123,7 +123,7 @@ function initScene() {
 
   // import logo 3D model asset (my first name last name initial: JY)
   const loader = new GLTFLoader().setPath('./assets/');
-  loader.load('logo3D.glb', (gltf) => {
+  loader.load('Logo3D.glb', (gltf) => {
     model = gltf.scene;
 
     model.scale.set(0.5, 0.5, 0.5);
