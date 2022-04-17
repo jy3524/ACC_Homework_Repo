@@ -6,6 +6,8 @@
 
 ![image0](./assets/image0.jpg)
 ![image1](./assets/image1.png)
+![image2](./assets/image2.jpg)
+![image3](./assets/image3.png)
 
 ##### Anticipated challenges can be the time we have left. If I face programmatic obstacles, I will try to make it work but I cannot try to solve the problem for a long time since we need to wrap it up in two weeks. In that case, the current plan might pivot due to time constraints. Before I start creating a scene and objects, I need to make sure what I can achieve or cannot achieve within the timeframe.
 
