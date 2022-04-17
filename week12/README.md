@@ -2,7 +2,7 @@
 
 ### Final Concept
 
-##### I am planning to build a virtual environment using three.js. In the environment, users can interact with other objects in the scene (raycasting). Objects will consist of mesh or imported gltf assets (gsap to animate assets). I am going to use the first-person camera so it gives a Web VR type of experience. 
+##### I am planning to build a virtual environment using three.js. In the environment, users can interact with other objects in the scene (raycasting). Objects will consist of mesh or imported gltf assets (gsap to animate assets). I am going to use the first-person camera so it gives a Web VR type of experience. Below are inspired images.
 
 ![image0](./assets/image0.jpg)
 ![image1](./assets/image1.png)
