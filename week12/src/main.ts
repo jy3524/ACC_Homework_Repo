@@ -1,78 +1,86 @@
 import './style.scss';
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import Stats from 'three/examples/jsm/libs/stats.module';
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls.js';
+import { DragControls } from 'three/examples/jsm/controls/DragControls.js';
+
+let model = {
+	activeView: 0,
+	pointerPosition: new THREE.Vector2(0,0)
+}
 
 let renderer: THREE.WebGLRenderer;
-let scene: THREE.Scene;
-let camera: THREE.PerspectiveCamera;
+let controls: FirstPersonControls;
+let controlsD: DragControls;
+let stats: any;
 
-let lightAmbient: THREE.AmbientLight;
-let lightPoint: THREE.PointLight;
+let viewOne: ViewOne;
 
-let controls: OrbitControls;
+let views: BaseView[] = [];
+
+import { ViewOne } from './view/ViewOne';
+import { BaseView } from './view/BaseView';
 
 function main() {
-  initScene();
-  initListeners();
+	initScene();
+	initStats();
+	initListeners();
+}
+
+function initStats() {
+	stats = new (Stats as any)();
+	document.body.appendChild(stats.dom);
 }
 
 function initScene() {
-  scene = new THREE.Scene();
+	renderer = new THREE.WebGLRenderer();
+	renderer.shadowMap.enabled = true;
+	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+	renderer.setPixelRatio(window.devicePixelRatio);
+	renderer.setSize(window.innerWidth, window.innerHeight);
 
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.y = 1;
-  camera.position.z = 5;
+	document.body.appendChild(renderer.domElement);
+  
+	viewOne = new ViewOne(model, renderer);
+	views.push(viewOne);
 
-  renderer = new THREE.WebGLRenderer({antialias: true});
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFShadowMap;
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  controls = new FirstPersonControls(views[model.activeView].camera, renderer.domElement);
+  controls.lookSpeed = 0.03;
+  controls.movementSpeed = 0.5;
+  controls.lookVertical = false;
 
-  document.body.appendChild(renderer.domElement);
-  // orbit controls
-  controls = new OrbitControls(camera, renderer.domElement);
+  controlsD = new DragControls(views[model.activeView].scene.children, views[model.activeView].camera, renderer.domElement)
+  controlsD.addEventListener('dragstart', function(event) {
+    controls.enabled = false;
+    event.object.material.opacity = 0.33;
+  });
+  controlsD.addEventListener('dragend', function(event) {
+    controls.enabled = true;
+    event.object.material.opacity = 1;
+  })
 
-  lightAmbient = new THREE.AmbientLight(0x404040);
-  scene.add(lightAmbient);
-
-  lightPoint = new THREE.PointLight(0xffffff);
-  lightPoint.position.set(-0.5, 1, 6);
-  lightPoint.castShadow = true;
-  lightPoint.intensity = 0.5;
-  scene.add(lightPoint);
-
-  const mapSize = 1024;
-  const cameraNear = 0.5;
-  const cameraFar = 500;
-  lightPoint.shadow.mapSize.width = mapSize;
-  lightPoint.shadow.mapSize.height = mapSize;
-  lightPoint.shadow.camera.near = cameraNear;
-  lightPoint.shadow.camera.far = cameraFar;
-
-  animate();
+	animate();
 }
 
 function initListeners() {
-  window.addEventListener('resize', onWindowResize, false);
+	window.addEventListener('resize', onWindowResize, false);
 }
 
 function onWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+	viewOne.onWindowResize();
 }
 
 function animate() {
-  requestAnimationFrame(() => {
-    animate();
-  });
+	requestAnimationFrame(() => {
+		animate();
+	});
+	
+	if (stats) stats.update();
 
-  if (controls) controls.update();
+	if (controls) controls.update(0.05);
 
-  renderer.setClearColor(0x000000, 1);
-  renderer.render(scene, camera);
-
+	renderer.render(views[model.activeView].scene, views[model.activeView].camera);
 }
 
 main();
