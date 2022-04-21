@@ -6,7 +6,7 @@ export class BaseView {
 	camera: PerspectiveCamera;
 	renderer: WebGLRenderer;
 	model: any;
-
+  
 	constructor(model: any, renderer: WebGLRenderer) {
 		this.scene = new Scene();
 		this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);

@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import Stats from 'three/examples/jsm/libs/stats.module';
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls.js';
-import { DragControls } from 'three/examples/jsm/controls/DragControls.js';
+//import { DragControls } from 'three/examples/jsm/controls/DragControls.js';
 
 let model = {
 	activeView: 0,
@@ -12,15 +12,20 @@ let model = {
 
 let renderer: THREE.WebGLRenderer;
 let controls: FirstPersonControls;
-let controlsD: DragControls;
+//let controlsD: DragControls;
 let stats: any;
 
 let viewOne: ViewOne;
+
+// let material: MeshLambertMaterial;
+// let floorGeometry: PlaneBufferGeometry;
+// let floor: Mesh;
 
 let views: BaseView[] = [];
 
 import { ViewOne } from './view/ViewOne';
 import { BaseView } from './view/BaseView';
+// import { Mesh, MeshLambertMaterial, PlaneBufferGeometry } from 'three';
 
 function main() {
 	initScene();
@@ -45,20 +50,29 @@ function initScene() {
 	viewOne = new ViewOne(model, renderer);
 	views.push(viewOne);
 
-  controls = new FirstPersonControls(views[model.activeView].camera, renderer.domElement);
-  controls.lookSpeed = 0.03;
-  controls.movementSpeed = 0.5;
-  controls.lookVertical = false;
+	controls = new FirstPersonControls(views[model.activeView].camera, renderer.domElement);
+	controls.lookSpeed = 0.03;
+	controls.movementSpeed = 0.5;
+	controls.lookVertical = false;
 
-  controlsD = new DragControls(views[model.activeView].scene.children, views[model.activeView].camera, renderer.domElement)
-  controlsD.addEventListener('dragstart', function(event) {
-    controls.enabled = false;
-    event.object.material.opacity = 0.33;
-  });
-  controlsD.addEventListener('dragend', function(event) {
-    controls.enabled = true;
-    event.object.material.opacity = 1;
-  })
+	// controlsD = new DragControls(views[model.activeView].scene.children, views[model.activeView].camera, renderer.domElement)
+	// controlsD.addEventListener('dragstart', function(event) {
+	// 	controls.enabled = false;
+	// 	event.object.material.opacity = 0.33;
+	// });
+	// controlsD.addEventListener('dragend', function(event) {
+	// 	controls.enabled = true;
+	// 	event.object.material.opacity = 1;
+	// })
+
+	// material = new THREE.MeshLambertMaterial({ color: 0xdddddd });
+
+	// // floor
+	// floorGeometry = new THREE.PlaneBufferGeometry(300, 300, 100, 100);
+	// floorGeometry.rotateX(-Math.PI / 2);
+	// floor = new THREE.Mesh(floorGeometry, material);
+	// floor.receiveShadow = true;
+	// views[model.activeView].scene.add(floor)
 
 	animate();
 }
@@ -79,6 +93,8 @@ function animate() {
 	if (stats) stats.update();
 
 	if (controls) controls.update(0.05);
+	
+	
 
 	renderer.render(views[model.activeView].scene, views[model.activeView].camera);
 }
