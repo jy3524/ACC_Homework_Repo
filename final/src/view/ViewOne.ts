@@ -1,16 +1,16 @@
 import {
-	AmbientLight,
-	PointLight,
-	WebGLRenderer,
+  AmbientLight,
+  PointLight,
+  WebGLRenderer,
 } from 'three';
 import { BaseView } from "./BaseView";
 
 export class ViewOne extends BaseView {
 
-  lightAmbient: AmbientLight;
-  lightPoint: PointLight;
+lightAmbient: AmbientLight;
+lightPoint: PointLight;
 
-	constructor(model: any, renderer: WebGLRenderer) {
+  constructor(model: any, renderer: WebGLRenderer) {
     super(model, renderer);
 
     this.lightAmbient = new AmbientLight(0x404040);
@@ -30,5 +30,5 @@ export class ViewOne extends BaseView {
     this.lightPoint.shadow.mapSize.height = mapSize;
     this.lightPoint.shadow.camera.near = cameraNear;
     this.lightPoint.shadow.camera.far = cameraFar;
-	}
+  }
 }

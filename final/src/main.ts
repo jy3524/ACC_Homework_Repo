@@ -15,8 +15,8 @@ import vertexShader from './shaders/vertex.glsl?raw';
 import fragmentShader from './shaders/fragment.glsl?raw';
 
 let model = {
-	activeView: 0,
-	pointerPosition: new THREE.Vector2(0,0)
+  activeView: 0,
+  pointerPosition: new THREE.Vector2(0,0)
 }
 
 let camera: PerspectiveCamera;
@@ -47,15 +47,15 @@ const meshes: any = [];
 const bodies: any = [];
 
 function main() {
-	initScene();
+  initScene();
   initCannon();
-	initStats();
-	initListeners();
+  initStats();
+  initListeners();
 }
 
 function initStats() {
-	stats = new (Stats as any)();
-	document.body.appendChild(stats.dom);
+  stats = new (Stats as any)();
+  document.body.appendChild(stats.dom);
 }
 
 function initScene() {
@@ -156,7 +156,7 @@ function initScene() {
   sphereMesh.position.y = 1;
   views[model.activeView].scene.add(sphereMesh);
 
-	animate();
+  animate();
 }
 
 // CANNON function modified from cannon-es official document and example
@@ -194,7 +194,6 @@ window.addEventListener('pointerdown', (event) => {
   }
   showClickMarker();
   moveClickMarker(hitPoint);
-
   moveMovementPlane(hitPoint, camera);
 })
 
@@ -203,7 +202,7 @@ window.addEventListener('pointermove', (event) => {
   if (!isDragging) {
     return
   }
-  
+
   const hitPoint = getHitPoint(event.clientX, event.clientY, movementPlane, camera);
 
   if (hitPoint) {
@@ -221,7 +220,6 @@ function moveClickMarker(position: any) {
 
 function moveMovementPlane(point: any, camera: any) {
   movementPlane.position.copy(point);
-
   movementPlane.quaternion.copy(camera.quaternion);
 }
 
@@ -238,25 +236,25 @@ function getHitPoint(clientX: any, clientY: any, mesh: any, camera: any) {
 }
 
 function initListeners() {
-	window.addEventListener('resize', onWindowResize, false);
+  window.addEventListener('resize', onWindowResize, false);
 }
 
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
-	viewOne.onWindowResize();
+  viewOne.onWindowResize();
 }
 
 function animate() {
-	requestAnimationFrame(() => {
-		animate();
-	});
+  requestAnimationFrame(() => {
+    animate();
+  });
 
-	if (stats) stats.update();
+  if (stats) stats.update();
 
-	if (controls) controls.update(0.05);
+  if (controls) controls.update(0.05);
 
-	renderer.render(views[model.activeView].scene, camera);
-}
+  renderer.render(views[model.activeView].scene, camera);
+  }
 
 main();
