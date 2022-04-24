@@ -4,6 +4,7 @@ import Stats from 'three/examples/jsm/libs/stats.module';
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls.js';
 import { DragControls } from 'three/examples/jsm/controls/DragControls.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { PerspectiveCamera, Mesh, MeshLambertMaterial, SphereBufferGeometry, TextureLoader } from 'three';
 import * as CANNON from 'cannon-es';
 import { gsap } from 'gsap';
@@ -42,6 +43,7 @@ let cubeBody: CANNON.Body;
 let jointBody: CANNON.Body;
 
 let tl: any;
+let gltfModel: THREE.Group;
 
 const meshes: any = [];
 const bodies: any = [];
@@ -60,7 +62,7 @@ function initStats() {
 
 function initScene() {
   camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.z = 5;
+  camera.position.z = 7;
 
   renderer = new THREE.WebGLRenderer();
   renderer.shadowMap.enabled = true;
@@ -110,9 +112,35 @@ function initScene() {
 
   tl = gsap.timeline();
 
-  // loading image of myself
+  // load images
   const textureLoader = new TextureLoader();
-  const texture = textureLoader.load('../../assets/Jeongin_Yoon.jpg');
+  const texture = textureLoader.load('../assets/Jeongin_Yoon.jpg');
+  const vrTexture = textureLoader.load('../assets/vr.png');
+  const arTexture = textureLoader.load('../assets/ar.png');
+
+  // load glb
+  const loader = new GLTFLoader().setPath('../assets/');
+  loader.load('Logo3D.glb', (gltf) => {
+    gltfModel = gltf.scene;
+
+    gltfModel.scale.set(0.5, 0.5, 0.5);
+    gltfModel.position.x = 5;
+    gltfModel.position.y = -1;
+
+    const logoMaterial = new THREE.MeshPhongMaterial({color: 0xffd3da});
+
+    interface gltfMesh extends THREE.Object3D<THREE.Event> {
+      material: THREE.Material;
+    }
+
+    gltfModel.traverse((child: THREE.Object3D<THREE.Event>) =>{
+      if (child.type === "Mesh") {
+        (child as gltfMesh).material = logoMaterial;
+      }
+    });
+
+    views[model.activeView].scene.add(gltfModel);
+  });
 
   // plane (floor)
   const geometryPlane = new THREE.PlaneBufferGeometry(500, 500, 100, 100);
@@ -142,10 +170,10 @@ function initScene() {
   views[model.activeView].scene.add(cubeMesh);
 
   // gsap animation of my portrait
-  tl.to(cubeMesh.position, {y: 1.5, duration: 10, repeat: 4, yoyo: true})
+  tl.to(cubeMesh.position, {y: 1.5, duration: 10, repeat: 10, yoyo: true})
 
   // sphere
-  const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
+  const sphereGeometry = new THREE.SphereGeometry(0.7, 32, 32);
   const sphereMaterial = new THREE.ShaderMaterial({
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
@@ -155,6 +183,36 @@ function initScene() {
   sphereMesh.position.x = -5;
   sphereMesh.position.y = 1;
   views[model.activeView].scene.add(sphereMesh);
+
+  // vr gallery
+  const vrGeometry = new THREE.BoxBufferGeometry(3, 2, 0.05, 10, 10);
+  const vrMaterial = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    map: vrTexture,
+  });
+  let vr = new THREE.Mesh(vrGeometry, vrMaterial);
+  vr.rotation.set(0, 1.5, 0);
+  vr.position.x = -7;
+  vr.position.y = 0.3;
+  vr.position.z = 5;
+  vr.castShadow = true;
+  vr.material.side = THREE.DoubleSide;
+  views[model.activeView].scene.add(vr);
+
+  // ar gallery
+  const arGeometry = new THREE.BoxBufferGeometry(3, 2, 0.05, 10, 10);
+  const arMaterial = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    map: arTexture,
+  });
+  let ar = new THREE.Mesh(arGeometry, arMaterial);
+  ar.rotation.set(0, 1.5, 0);
+  ar.position.x = 7;
+  ar.position.y = 0.3;
+  ar.position.z = 5;
+  ar.castShadow = true;
+  ar.material.side = THREE.DoubleSide;
+  views[model.activeView].scene.add(ar);
 
   animate();
 }
@@ -249,6 +307,16 @@ function animate() {
   requestAnimationFrame(() => {
     animate();
   });
+
+  if (gltfModel != undefined) {
+    gltfModel.rotateY(0.01);
+  }
+
+  if (sphereMesh != undefined) {
+    sphereMesh.rotateX(0.01);
+    sphereMesh.rotateY(0.01);
+    sphereMesh.rotateZ(0.01);
+  }
 
   if (stats) stats.update();
 
