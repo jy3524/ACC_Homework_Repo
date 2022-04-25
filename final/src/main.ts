@@ -43,7 +43,9 @@ let cubeBody: CANNON.Body;
 let jointBody: CANNON.Body;
 
 let tl: any;
-let gltfModel: THREE.Group;
+let glbModel: THREE.Group;
+let danceModel: THREE.Group;
+let mixer : THREE.AnimationMixer;
 
 const meshes: any = [];
 const bodies: any = [];
@@ -121,11 +123,11 @@ function initScene() {
   // load glb
   const loader = new GLTFLoader().setPath('../assets/');
   loader.load('Logo3D.glb', (gltf) => {
-    gltfModel = gltf.scene;
+    glbModel = gltf.scene;
 
-    gltfModel.scale.set(0.5, 0.5, 0.5);
-    gltfModel.position.x = 5;
-    gltfModel.position.y = -1;
+    glbModel.scale.set(0.5, 0.5, 0.5);
+    glbModel.position.x = 5;
+    glbModel.position.y = -1;
 
     const logoMaterial = new THREE.MeshPhongMaterial({color: 0xffd3da});
 
@@ -133,14 +135,31 @@ function initScene() {
       material: THREE.Material;
     }
 
-    gltfModel.traverse((child: THREE.Object3D<THREE.Event>) =>{
+    glbModel.traverse((child: THREE.Object3D<THREE.Event>) =>{
       if (child.type === "Mesh") {
         (child as gltfMesh).material = logoMaterial;
       }
     });
 
-    views[model.activeView].scene.add(gltfModel);
+    views[model.activeView].scene.add(glbModel);
   });
+
+  // load korean dancer
+  loader.load('dance.glb', (gltf) => {
+    danceModel = gltf.scene;
+    danceModel.scale.set(0.3, 0.3, 0.3);
+    danceModel.position.y = -0.3;
+    danceModel.position.z = 10;
+    danceModel.rotation.y = 3;
+  
+    views[model.activeView].scene.add(danceModel);
+
+    mixer = new THREE.AnimationMixer(danceModel);
+    const clips = gltf.animations;
+    clips.forEach((clip) => {
+      mixer.clipAction(clip).play();
+    });
+  })
 
   // plane (floor)
   const geometryPlane = new THREE.PlaneBufferGeometry(500, 500, 100, 100);
@@ -303,13 +322,15 @@ function onWindowResize() {
   viewOne.onWindowResize();
 }
 
+const clock = new THREE.Clock();
+
 function animate() {
   requestAnimationFrame(() => {
     animate();
   });
 
-  if (gltfModel != undefined) {
-    gltfModel.rotateY(0.01);
+  if (glbModel != undefined) {
+    glbModel.rotateY(0.01);
   }
 
   if (sphereMesh != undefined) {
@@ -318,11 +339,15 @@ function animate() {
     sphereMesh.rotateZ(0.01);
   }
 
+  if (mixer) {
+    mixer.update(clock.getDelta());
+  }
+
   if (stats) stats.update();
 
   if (controls) controls.update(0.05);
 
   renderer.render(views[model.activeView].scene, camera);
-  }
+}
 
 main();
