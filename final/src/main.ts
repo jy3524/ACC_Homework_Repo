@@ -119,6 +119,8 @@ function initScene() {
   const texture = textureLoader.load('../assets/Jeongin_Yoon.jpg');
   const vrTexture = textureLoader.load('../assets/vr.png');
   const arTexture = textureLoader.load('../assets/ar.png');
+  const interiorTexture = textureLoader.load('../assets/interior.jpg');
+  const arGlasses = textureLoader.load('../assets/glasses.png');
 
   // load glb
   const loader = new GLTFLoader().setPath('../assets/');
@@ -147,9 +149,9 @@ function initScene() {
   // load korean dancer
   loader.load('dance.glb', (gltf) => {
     danceModel = gltf.scene;
-    danceModel.scale.set(0.3, 0.3, 0.3);
-    danceModel.position.y = -0.3;
-    danceModel.position.z = 10;
+    danceModel.scale.set(0.4, 0.4, 0.4);
+    danceModel.position.y = -0.5;
+    danceModel.position.z = 13;
     danceModel.rotation.y = 3;
   
     views[model.activeView].scene.add(danceModel);
@@ -232,6 +234,36 @@ function initScene() {
   ar.castShadow = true;
   ar.material.side = THREE.DoubleSide;
   views[model.activeView].scene.add(ar);
+
+  // ar glasses gallery
+  const glassesGeometry = new THREE.BoxBufferGeometry(3, 2, 0.05, 10, 10);
+  const glassesMaterial = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    map: arGlasses,
+  });
+  let glasses = new THREE.Mesh(glassesGeometry, glassesMaterial);
+  glasses.rotation.set(0, 1.5, 0);
+  glasses.position.x = 7;
+  glasses.position.y = 0.3;
+  glasses.position.z = 10;
+  glasses.castShadow = true;
+  glasses.material.side = THREE.DoubleSide;
+  views[model.activeView].scene.add(glasses);
+
+  // 3D environment gallery
+  const interiorGeometry = new THREE.BoxBufferGeometry(3, 2, 0.05, 10, 10);
+  const interiorMaterial = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    map: interiorTexture,
+  });
+  let interior = new THREE.Mesh(interiorGeometry, interiorMaterial);
+  interior.rotation.set(0, 1.5, 0);
+  interior.position.x = -7;
+  interior.position.y = 0.3;
+  interior.position.z = 10;
+  interior.castShadow = true;
+  interior.material.side = THREE.DoubleSide;
+  views[model.activeView].scene.add(interior);
 
   animate();
 }
