@@ -37,6 +37,7 @@ let cubeMesh: Mesh;
 let clickMarker: Mesh;
 let movementPlane: Mesh;
 let sphereMesh: Mesh;
+let ballMesh: Mesh;
 
 let world: CANNON.World;
 let cubeBody: CANNON.Body;
@@ -149,7 +150,7 @@ function initScene() {
   // load korean dancer
   loader.load('dance.glb', (gltf) => {
     danceModel = gltf.scene;
-    danceModel.scale.set(0.4, 0.4, 0.4);
+    danceModel.scale.set(1, 1, 1);
     danceModel.position.y = -0.5;
     danceModel.position.z = 13;
     danceModel.rotation.y = 3;
@@ -191,7 +192,7 @@ function initScene() {
   views[model.activeView].scene.add(cubeMesh);
 
   // gsap animation of my portrait
-  tl.to(cubeMesh.position, {y: 1.5, duration: 10, repeat: 10, yoyo: true})
+  tl.to(cubeMesh.position, {y: 1.5, duration: 10, repeat: 20, yoyo: true})
 
   // sphere
   const sphereGeometry = new THREE.SphereGeometry(0.7, 32, 32);
@@ -264,6 +265,15 @@ function initScene() {
   interior.castShadow = true;
   interior.material.side = THREE.DoubleSide;
   views[model.activeView].scene.add(interior);
+
+  // ball
+  const ballGeometry = new THREE.SphereGeometry(0.7, 32, 32);
+  const ballMaterial = new THREE.MeshPhongMaterial({color: 0xff6600})
+  ballMesh = new THREE.Mesh(ballGeometry, ballMaterial);
+  ballMesh.castShadow = true;
+  ballMesh.position.y = 3.5;
+  ballMesh.position.z = 13;
+  views[model.activeView].scene.add(ballMesh);
 
   animate();
 }
