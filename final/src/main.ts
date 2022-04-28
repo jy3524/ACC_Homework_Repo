@@ -44,6 +44,7 @@ let cubeBody: CANNON.Body;
 let jointBody: CANNON.Body;
 
 let tl: any;
+let tl1: any;
 let glbModel: THREE.Group;
 let danceModel: THREE.Group;
 let mixer : THREE.AnimationMixer;
@@ -114,6 +115,7 @@ function initScene() {
   raycaster = new THREE.Raycaster();
 
   tl = gsap.timeline();
+  tl1 = gsap.timeline();
 
   // load images
   const textureLoader = new TextureLoader();
@@ -268,12 +270,18 @@ function initScene() {
 
   // ball
   const ballGeometry = new THREE.SphereGeometry(0.7, 32, 32);
-  const ballMaterial = new THREE.MeshPhongMaterial({color: 0xff6600})
+  const ballMaterial = new THREE.MeshPhongMaterial({
+    color: 0xff6600,
+    shininess: 100,
+  })
   ballMesh = new THREE.Mesh(ballGeometry, ballMaterial);
   ballMesh.castShadow = true;
+  ballMesh.position.x = -10;
   ballMesh.position.y = 3.5;
   ballMesh.position.z = 13;
   views[model.activeView].scene.add(ballMesh);
+
+  tl1.to(ballMesh.position, {x: 10, duration: 5, repeat: 100, yoyo: true})
 
   animate();
 }
