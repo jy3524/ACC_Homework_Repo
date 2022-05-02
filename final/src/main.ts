@@ -38,6 +38,10 @@ let clickMarker: Mesh;
 let movementPlane: Mesh;
 let sphereMesh: Mesh;
 let ballMesh: Mesh;
+let frontWallMesh: Mesh;
+let leftWallMesh: Mesh;
+let rightWallMesh: Mesh;
+let backWallMesh: Mesh;
 
 let world: CANNON.World;
 let cubeBody: CANNON.Body;
@@ -282,6 +286,51 @@ function initScene() {
   views[model.activeView].scene.add(ballMesh);
 
   tl1.to(ballMesh.position, {x: 10, duration: 5, repeat: 100, yoyo: true})
+
+  // front wall
+  const frontWallGeo = new THREE.BoxBufferGeometry(30, 15, 0.1, 10, 10);
+  const frontWallMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.4});
+  frontWallMesh = new THREE.Mesh(frontWallGeo, frontWallMat);
+  frontWallMesh.castShadow = true;
+  frontWallMesh.position.y = 1;
+  frontWallMesh.position.z = -6;
+  meshes.push(frontWallMesh);
+  views[model.activeView].scene.add(frontWallMesh);
+
+  // left wall
+  const leftWallGeo = new THREE.BoxBufferGeometry(30, 15, 0.1, 10, 10);
+  const leftWallMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.4});
+  leftWallMesh = new THREE.Mesh(leftWallGeo, leftWallMat);
+  leftWallMesh.castShadow = true;
+  leftWallMesh.position.x = -15;
+  leftWallMesh.position.y = 1;
+  leftWallMesh.rotation.y = 4.7;
+  leftWallMesh.position.z = 8.8;
+  meshes.push(leftWallMesh);
+  views[model.activeView].scene.add(leftWallMesh);
+
+  // right wall
+  const rightWallGeo = new THREE.BoxBufferGeometry(30, 15, 0.1, 10, 10);
+  const rightWallMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.4});
+  rightWallMesh = new THREE.Mesh(rightWallGeo, rightWallMat);
+  rightWallMesh.castShadow = true;
+  rightWallMesh.position.x = 14.5;
+  rightWallMesh.position.y = 1;
+  rightWallMesh.rotation.y = 4.7;
+  rightWallMesh.position.z = 8.8;
+  meshes.push(rightWallMesh);
+  views[model.activeView].scene.add(rightWallMesh);
+
+  // back wall
+  const backWallGeo = new THREE.BoxBufferGeometry(30, 15, 0.1, 10, 10);
+  const backWallMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.4});
+  backWallMesh = new THREE.Mesh(backWallGeo, backWallMat);
+  backWallMesh.castShadow = true;
+  backWallMesh.position.x = -0.5;
+  backWallMesh.position.y = 1;
+  backWallMesh.position.z = 24;
+  meshes.push(backWallMesh);
+  views[model.activeView].scene.add(backWallMesh);
 
   animate();
 }
