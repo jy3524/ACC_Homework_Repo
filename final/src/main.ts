@@ -289,7 +289,7 @@ function initScene() {
 
   // front wall
   const frontWallGeo = new THREE.BoxBufferGeometry(30, 15, 0.1, 10, 10);
-  const frontWallMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.4});
+  const frontWallMat = new THREE.MeshBasicMaterial({ color: 0xdddddd, transparent: true, opacity: 0.4});
   frontWallMesh = new THREE.Mesh(frontWallGeo, frontWallMat);
   frontWallMesh.castShadow = true;
   frontWallMesh.position.y = 1;
@@ -299,7 +299,7 @@ function initScene() {
 
   // left wall
   const leftWallGeo = new THREE.BoxBufferGeometry(30, 15, 0.1, 10, 10);
-  const leftWallMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.4});
+  const leftWallMat = new THREE.MeshBasicMaterial({ color: 0xdddddd, transparent: true, opacity: 0.4});
   leftWallMesh = new THREE.Mesh(leftWallGeo, leftWallMat);
   leftWallMesh.castShadow = true;
   leftWallMesh.position.x = -15;
@@ -311,7 +311,7 @@ function initScene() {
 
   // right wall
   const rightWallGeo = new THREE.BoxBufferGeometry(30, 15, 0.1, 10, 10);
-  const rightWallMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.4});
+  const rightWallMat = new THREE.MeshBasicMaterial({ color: 0xdddddd, transparent: true, opacity: 0.4});
   rightWallMesh = new THREE.Mesh(rightWallGeo, rightWallMat);
   rightWallMesh.castShadow = true;
   rightWallMesh.position.x = 14.5;
@@ -323,7 +323,7 @@ function initScene() {
 
   // back wall
   const backWallGeo = new THREE.BoxBufferGeometry(30, 15, 0.1, 10, 10);
-  const backWallMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.4});
+  const backWallMat = new THREE.MeshBasicMaterial({ color: 0xdddddd, transparent: true, opacity: 0.4});
   backWallMesh = new THREE.Mesh(backWallGeo, backWallMat);
   backWallMesh.castShadow = true;
   backWallMesh.position.x = -0.5;
